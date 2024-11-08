@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,16 +17,18 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', MainController::class)->name('main');
 
-Auth::routes();
+Auth::routes(); //Library Auth belum dipasang
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('products', ProductController::class);
+Route::resource('categories', CategoryController::class);
 
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('cart/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 //------------------LOGIN PILIH SATU
 // Route::group(['middleware' => 'auth'], function(){
 //     Route::resource('products', ProductController::class);

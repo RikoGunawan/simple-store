@@ -66,6 +66,19 @@
                             <label class="form-label" for="photo">Photo</label>
                             <input class="form-control @error('photo') is-invalid @enderror" type="file" name="photo">
                         </div>
+                        <div class="col-6">
+                            <label class="form-label" for="category_id">Category</label>
+                            <select class="form-control @error('category_id') is-invalid @enderror" name="category_id"
+                                id="category_id">
+                                <option value="">Select a category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <img src="{{ Storage::url($product->photo) }}" class="img-fluid">
 
